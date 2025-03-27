@@ -246,22 +246,17 @@ class Parser:
 
             Example:
             {{
-              [
-                {{
-                  "name": "Hilton La Romana",
-                  "group": "Hilton All Inclusive",
-                  "country": "Dominican Republic",
-                  "region": "Caribbean",
-                  "city": "Bayahibe",
-                  "collection": "hilton_all_inclusive",
-                  "description": "Hilton La Romana Resort & Water Park is an all-inclusive family resort located on
-                  the southeastern coast of the Dominican Republic in Bayahibe, La Romana. The resort features a new
-                  water park with thrilling slides, a lazy river, and a kids' splash zone, along with multiple dining
-                  options and family-sized accommodations. Guests can enjoy amenities such as a full-service spa,
-                  fitness center, and various land and water activities, making it an ideal destination for family
-                  fun and relaxation."
-                }}
-              ]
+                [
+                    {
+                    "name": "Solara Nexus",
+                    "group": "Solara Conglomerate",
+                    "country": "Fictivia",
+                    "region": "Northern Corridor",
+                    "city": "NeoBay",
+                    "collection": "solara_global",
+                    "description": "Solara Nexus is a multifunctional complex located in the heart of NeoBay, Fictivia. As part of the Solara Conglomerate's global collection, it serves as a hub for innovation, collaboration, and engagement. The facility offers modular spaces, advanced infrastructure, and adaptive environments designed to support a wide range of initiatives, including research, creative development, and immersive experiences. Its strategic location and flexible design make it a key node in the conglomerate’s international network."
+                    }
+                ]
             }}
 
             JSON Table:

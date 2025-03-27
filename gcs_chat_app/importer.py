@@ -71,7 +71,7 @@ class Parser:
             self.embeddings = VertexAIEmbeddings(model_name="text-embedding-004")
 
     def run(self):
-        hotel_info_list = []
+        conglomerate_info_list = []
 
         for root, dirs, files in os.walk(DATA_FOLDER):
             for file in files:
@@ -81,11 +81,11 @@ class Parser:
                         self.clean_output_path()
                         metadata = self.parser_path_to_text(os.path.join(root, file))
 
-                        already_seen = {d["name"] for d in hotel_info_list}
+                        already_seen = {d["name"] for d in conglomerate_info_list}
 
                         if metadata.get("name") != metadata.get("group"):
                             if metadata.get("name") not in already_seen:
-                                hotel_info_list.append(metadata)
+                                conglomerate_info_list.append(metadata)
 
                         try:
                             documents = PyPDFLoader(
@@ -179,20 +179,20 @@ class Parser:
                         print(f"Error in embedding {os.path.join(root, file)}")
                         print(e)
 
-        # embed all the hotel_info_list to database
-        all_hotel_info = ""
-        for hotel in hotel_info_list:
-            hotel_string = (
-                f"'{hotel.get('name')}' Hotel which is belong to '{hotel.get('group')}' group and located in '{hotel.get('country')}' country"
-                f", '{hotel.get('region')}' region and '{hotel.get('city')}' city, and the collection ID is '{hotel.get('collection')}'\n"
+        # embed all the conglomerate_info_list to database
+        all_conglomerate_info = ""
+        for conglomerate in conglomerate_info_list:
+            conglomerate_string = (
+                f"'{conglomerate.get('name')}' conglomerate which is belong to '{conglomerate.get('group')}' group and located in '{conglomerate.get('country')}' country"
+                f", '{conglomerate.get('region')}' region and '{conglomerate.get('city')}' city, and the collection ID is '{conglomerate.get('collection')}'\n"
             )
-            # hotel_meta = json.dumps(hotel)
-            all_hotel_info += hotel_string
+            # conglomerate_meta = json.dumps(conglomerate)
+            all_conglomerate_info += conglomerate_string
 
         documents = Document(
-            page_content=all_hotel_info,
+            page_content=all_conglomerate_info,
             metadata={
-                "source": "hotel_info",
+                "source": "conglomerate_info",
                 "page": 0,
             },
         )
@@ -206,7 +206,7 @@ class Parser:
             connection_string=self.connection_string,
             collection_name=COLLECTION_NAME,
         )
-        print(f"Embedding is done with the hotel list:\n {all_hotel_info}")
+        print(f"Embedding is done with the conglomerate list:\n {all_conglomerate_info}")
 
     def clean_output_path(self):
         for file in os.listdir(IMG_FOLDER):
@@ -222,19 +222,19 @@ class Parser:
             return "data:image/jpg;base64," + base64.b64encode(f.read()).decode("utf-8")
 
     def parser_path_to_text(self, file_path: str):
-        hotel_group = file_path.split(DATA_FOLDER)[1].split("/")[0].rstrip().lstrip()
-        hotel_name = file_path.split(DATA_FOLDER)[1].split("/")[-2].rstrip().lstrip()
-        hotel_dict = {}
+        conglomerate_group = file_path.split(DATA_FOLDER)[1].split("/")[0].rstrip().lstrip()
+        conglomerate_name = file_path.split(DATA_FOLDER)[1].split("/")[-2].rstrip().lstrip()
+        conglomerate_dict = {}
 
-        if "Information" in hotel_name:
-            hotel_name = hotel_group
+        if "Information" in conglomerate_name:
+            conglomerate_name = conglomerate_group
             template = {
-                "name": hotel_name,
-                "group": hotel_group,
+                "name": conglomerate_name,
+                "group": conglomerate_group,
                 "country": "",
                 "region": "",
                 "city": "",
-                "collection": hotel_group.lower().replace(" ", "_"),
+                "collection": conglomerate_group.lower().replace(" ", "_"),
                 "description": "general information",
             }
             return template
@@ -268,8 +268,8 @@ class Parser:
             {{
               [
                 {{
-                  "name": "{hotel_name}",
-                  "group": "{hotel_group}",
+                  "name": "{conglomerate_name}",
+                  "group": "{conglomerate_group}",
                   "country": "",
                   "region": ""
                   "city": "",
@@ -290,8 +290,8 @@ class Parser:
 
         response = self.json_llm.invoke(messages)
         response_content = response.content
-        hotel_info = json.loads(response_content)
-        return hotel_info
+        conglomerate_info = json.loads(response_content)
+        return conglomerate_info
 
     def summarize_image(encoded_image):
         prompt = [

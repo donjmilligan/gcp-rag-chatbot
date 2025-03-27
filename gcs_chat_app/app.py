@@ -74,27 +74,27 @@ class ChatBot:
         self.metadata_field_info = [
             AttributeInfo(
                 name="name",
-                description="the name of the hotel",
+                description="the name of the conglomerate",
                 type="string",
             ),
             AttributeInfo(
                 name="group",
-                description="the hotel group which the hotel belongs to",
+                description="the conglomerate group which the location belongs to",
                 type="string",
             ),
             AttributeInfo(
                 name="country",
-                description="the country which the hotel is located",
+                description="the country which the conglomerate is located",
                 type="string",
             ),
             AttributeInfo(
                 name="region",
-                description="the region which the hotel is located",
+                description="the region which the conglomerate is located",
                 type="string",
             ),
             AttributeInfo(
                 name="city",
-                description="the city which the hotel is located",
+                description="the city which the conglomerate is located",
                 type="string",
             ),
             AttributeInfo(
@@ -104,12 +104,12 @@ class ChatBot:
             ),
             AttributeInfo(
                 name="description",
-                description="a brief description of the hotel",
+                description="a brief description of the conglomerate",
                 type="string",
             ),
         ]
 
-        self.document_content_description = "Brief summary of a hotel"
+        self.document_content_description = "Brief summary of a conglomerate"
 
         self.loader = GCSDirectoryLoader(
             project_name=os.getenv("GCS_PROJECT"),
@@ -369,15 +369,15 @@ class ChatBot:
                 appendix = "\n\nThe reference contents: \n"
                 for id, doc in enumerate(result["source_documents"]):
                     if "name" in doc.metadata:
-                        appendix += f"\n\tHotel Name: {doc.metadata['name']}"
+                        appendix += f"\n\tconglomerate Name: {doc.metadata['name']}"
                     if "group" in doc.metadata:
-                        appendix += f"\n\tHotel Group: {doc.metadata['group']}"
+                        appendix += f"\n\tconglomerate Group: {doc.metadata['group']}"
                     if "country" in doc.metadata:
-                        appendix += f"\n\tHotel Country: {doc.metadata['country']}"
+                        appendix += f"\n\tconglomerate Country: {doc.metadata['country']}"
                     if "region" in doc.metadata:
-                        appendix += f"\n\tHotel Region: {doc.metadata['region']}"
+                        appendix += f"\n\tconglomerate Region: {doc.metadata['region']}"
                     if "city" in doc.metadata:
-                        appendix += f"\n\tHotel City: {doc.metadata['city']}"
+                        appendix += f"\n\tconglomerate City: {doc.metadata['city']}"
                     if "source" in doc.metadata and "page" in doc.metadata:
                         appendix += f"\n\tDocument: {doc.metadata['source'].split('/')[-1]} in page {str(doc.metadata['page'])}\n"
                     if doc.metadata.get("type") == "image":

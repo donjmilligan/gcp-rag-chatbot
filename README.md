@@ -8,7 +8,7 @@ A modular Retrieval-Augmented Generation (RAG) chatbot built on Google Cloud Pla
 
 ```
 gcp-rag-chatbot-main/
-├── gcs_chat_app/       # FastAPI chat interface
+├── gcs_chat_app/       # Streamlit chat interface
 ├── gcs_embed/          # Document embedding pipeline
 ├── rag_agent/          # RAG agent logic and utilities
 ├── .gitignore
